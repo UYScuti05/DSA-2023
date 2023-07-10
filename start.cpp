@@ -1,40 +1,20 @@
 #include <bits/stdc++.h>
 using namespace std;
-
-class node {
-public:
-	int data;
-	node* left;
-	node* right;
-};
-
-int maxDepth(node* root)
-{
-	if(root==NULL) return 0;
-        int lhs = maxDepth(root->left);
-        int rhs = maxDepth(root->right);
-        return max(lhs,rhs)+1;
-}
-
-node* newNode(int data)
-{
-	node* Node = new node();
-	Node->data = data;
-	Node->left = NULL;
-	Node->right = NULL;
-
-	return (Node);
-}
-
+map<int,int> dp;
+int climbStairs(int n) {
+        if(n==0) return 0;
+        if(n==1) return 1;
+        if(n==2) return 2;
+        if(dp.find(n)!=dp.end()){
+            return dp[n];
+        }else{
+            dp[n] = climbStairs(n-1)+climbStairs(n-2);
+        }
+        return dp[n];
+    }
 int main()
 {
-	node* root = newNode(1);
-
-	root->left = newNode(2);
-	root->right = newNode(3);
-	root->left->left = newNode(4);
-	root->left->right = newNode(5);
-
-	cout << "Height of tree is " << maxDepth(root);
+	int n = 5;
+    cout<<climbStairs(n)<<endl;
 	return 0;
 }
