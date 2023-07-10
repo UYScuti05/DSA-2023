@@ -1,20 +1,40 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-void solution(vector<char> &s){
-    for(int i=0;i<s.size()/2;i++){
-            char temp = s[i];
-            s[i] = s[s.size()-1-i];
-            s[s.size()-1-i] = temp;
-        }
+class node {
+public:
+	int data;
+	node* left;
+	node* right;
+};
+
+int maxDepth(node* root)
+{
+	if(root==NULL) return 0;
+        int lhs = maxDepth(root->left);
+        int rhs = maxDepth(root->right);
+        return max(lhs,rhs)+1;
+}
+
+node* newNode(int data)
+{
+	node* Node = new node();
+	Node->data = data;
+	Node->left = NULL;
+	Node->right = NULL;
+
+	return (Node);
 }
 
 int main()
 {
-    vector<char> v = {'H','E','L','L','O','O'};
-    solution(v);
-    for(auto it: v){
-        cout<<it<<endl;
-    }
-    return 0;
+	node* root = newNode(1);
+
+	root->left = newNode(2);
+	root->right = newNode(3);
+	root->left->left = newNode(4);
+	root->left->right = newNode(5);
+
+	cout << "Height of tree is " << maxDepth(root);
+	return 0;
 }
